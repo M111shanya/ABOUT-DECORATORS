@@ -1,13 +1,14 @@
-def outer(func):
-    def inner(*args, **kwargs):
-        print("Реклама епта!")
-        return func(*args, **kwargs)
-        
-    return inner
+def second_outer(param):
+    def outer(func):
+        def inner(*args, **kwargs):
+            print(param)
+            return func(*args, **kwargs)
+            
+        return inner
+    return outer
 
+@second_outer("Зал Упки")
 def div(a, b):
     return a / b
 
-var = outer(div)
-print(type(var))
-print(var(1, 2))
+print(div(1, 2))
