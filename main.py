@@ -1,14 +1,18 @@
-def second_outer(param):
+def second_outer(*dargs, **dkwargs):
     def outer(func):
         def inner(*args, **kwargs):
-            print(param)
-            return func(*args, **kwargs)
-            
+            attempts = dkwargs["attempts"]
+            while attempts > 0:
+                try:
+                    return func(*args, **kwargs)
+                except Exception as err:
+                    print("Error", err)
+                    attempts -= 1
         return inner
     return outer
 
-@second_outer("Зал Упки")
+@second_outer(attempts = 50)
 def div(a, b):
     return a / b
 
-print(div(1, 2))
+print(div(1, 0))
